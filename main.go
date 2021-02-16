@@ -9,23 +9,20 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
+	"crypto/tls"
+	"/home/nineleaps/goProjects/go-kubernetes/helloworld.crt"
 	"github.com/gorilla/mux"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	name := query.Get("name")
-	interest := query.Get("interest")
 
-	if name == ""&&interest=="" {
+	if name == "" {
 		name = "Developer"
-	}else if interest =="" {
-		interest="React/golang"
-	}	
+	}
 	log.Printf("Received request for %s\n", name)
-	w.Write([]byte(fmt.Sprintf("Hello, %s\n", name)))
-	w.Write([]byte(fmt.Sprintf("Your Interest are, %s\n", interest)))
+	w.Write([]byte(fmt.Sprintf("Hi there !, %s\n", name)))
 
 }
 
@@ -35,20 +32,32 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", handler)
+	cert,_:=tls.LoadX509KeyPair("helloworld.crt","helloworld.key")
+
 
 
 	srv := &http.Server{
 		Handler:      r,
 		Addr:         ":8080",
+		TLSConfig:&tls.Config{
+			Certificates:[]tls.Certificate{cert},
+		},
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
 
 	// Start Server
+	// go func() {
+	// 	log.Println("Starting Server")
+	// 	if err := srv.ListenAndServe(); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }()
+
 	go func() {
 		log.Println("Starting Server")
-		if err := srv.ListenAndServe(); err != nil {
-			log.Fatal(err)
+		if err := srv.ListenAndServeTLS("helloworld.crt","helloworld.key"); err != nil {
+			log.Fatal("error",err)
 		}
 	}()
 
