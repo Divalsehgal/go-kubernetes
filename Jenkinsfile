@@ -10,7 +10,6 @@ pipeline {
                 sh 'mkdir -p ${GOPATH}/src/go-kubernetes'
                 // Copy all files in our Jenkins workspace to our project directory.
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/go-kubernetes'
-                sh 'll'
                 // Build the app.
                 sh 'go build'     }
         }
