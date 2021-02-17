@@ -6,10 +6,10 @@ pipeline {
             agent { docker { image 'golang' }  }
             steps {
                 // Create our project directory.
-                sh 'cd ${GOPATH}/src'
-                sh 'mkdir -p ${GOPATH}/src/go-kubernetes'
-                // Copy all files in our Jenkins workspace to our project directory.
-                sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/go-kubernetes'
+                // sh 'cd ${GOPATH}/src'
+                // sh 'mkdir -p ${GOPATH}/src/go-kubernetes'
+                // // Copy all files in our Jenkins workspace to our project directory.
+                // sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/go-kubernetes'
                 // Build the app.
                 sh 'go build'     }
         }
