@@ -1,6 +1,6 @@
 
 pipeline {
-    agent any
+    agent any environment{       registry = "divalsehgal/go-hello-world"       GOCACHE = "/tmp"   }
     stages   {
         stage('Build') {
             agent { docker { image 'golang' }  }
