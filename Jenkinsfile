@@ -29,13 +29,9 @@
 //     }
 // }
 
-
-
-
 pipeline {
     agent any
     environment{
-        DOCKER_TAG = getDockerTag()
         IMAGE_URL_WITH_TAG = "divalsehgal/go-hello-world:1.0.0"
     }
     stages{
@@ -44,18 +40,22 @@ pipeline {
                 sh "docker build . -t ${IMAGE_URL_WITH_TAG}"
             }
         }
-        stage('docker Push'){
+        stage('Docker Push'){
             steps{
                     sh "docker login -u divalsehgal -p getwellsoon"
                     sh "docker push ${IMAGE_URL_WITH_TAG}"
-                
             }
         }
-       
+        stage('Pods Deploy'){
+            steps{
+                    sh "minikube start"
+                    sh "kubectl apply -f k8s-deployment.yml"
+            }
+        }
+        stage('Service Deploy'){
+            steps{
+                    sh "kubectl apply -f k8s-services.yml"
+            }
+        }
     }
-}
-
-def getDockerTag(){
-    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
-    return tag
 }
