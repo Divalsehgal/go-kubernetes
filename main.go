@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 	"crypto/tls"
-	"/home/nineleaps/goProjects/go-kubernetes/helloworld.crt"
+
 	"github.com/gorilla/mux"
 )
 
@@ -56,7 +56,7 @@ func main() {
 
 	go func() {
 		log.Println("Starting Server")
-		if err := srv.ListenAndServeTLS("helloworld.crt","helloworld.key"); err != nil {
+		if err := srv.ListenAndServeTLS("./helloworld.crt","./helloworld.key"); err != nil {
 			log.Fatal("error",err)
 		}
 	}()
