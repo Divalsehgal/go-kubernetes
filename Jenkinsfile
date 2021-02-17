@@ -46,7 +46,6 @@ pipeline {
         }
         stage('docker Push'){
             steps{
-                withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
                     sh "docker login -u divalsehgal -p ${getwellsoon}"
                     sh "docker push ${IMAGE_URL_WITH_TAG}"
                 }
