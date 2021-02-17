@@ -1,6 +1,6 @@
 
 pipeline {
-    agent any environment
+    agent any
     stages   {
         stage('Build') {
             agent { docker { image 'golang' }  }
@@ -13,8 +13,7 @@ pipeline {
                 // Build the app.
                 sh 'go build'     }
         }
-        stage('Test') {
-            stage('Publish') {
+        stage('Publish') {
                 environment {
                     registryCredential = 'dockerhub' }
                     steps {
@@ -25,7 +24,6 @@ pipeline {
                         }
                         }
                     }
-            }
-            }
-            }
-            }
+        }
+    }
+}
