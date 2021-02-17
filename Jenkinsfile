@@ -11,6 +11,7 @@ pipeline {
                 // // Copy all files in our Jenkins workspace to our project directory.
                 // sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/go-kubernetes'
                 // Build the app.
+                sh 'pwd'
                 sh 'go build'     }
         }
         stage('Publish') {
