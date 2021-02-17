@@ -46,7 +46,7 @@ pipeline {
         }
         stage('docker Push'){
             steps{
-                    sh "docker login -u divalsehgal -p ${getwellsoon}"
+                    sh "docker login -u divalsehgal -p getwellsoon"
                     sh "docker push ${IMAGE_URL_WITH_TAG}"
                 
             }
